@@ -3,12 +3,14 @@ const shortid = require("shortid");
 const server = express();
 const port = 5000;
 
+server.use(express.json());
+
 let users = [
   {
     id: "lkjasdf84",
-    name: "Jane Doe", 
+    name: "Jane Doe",
     bio: "Not Tarzan's Wife, another Jane",
-  }
+  },
 ];
 
 server.get(`/api/users`, (req, res) => {
@@ -28,13 +30,13 @@ server.delete(`/api/users/:id`, (req, res) => {
   }
 });
 
-server.post(`/api/users`, (req, res) => {
-  const user = req.body;
+server.post("/api/users", (req, res) => {
+  const newUser = req.body;
 
-  user.id = shortid.generate();
+  newUser.id = shortid.generate();
 
-  users.push(user);
-  res.status(201).json(user);
+  users.push(newUser);
+  res.status(201).json(newUser);
 });
 
 server.get(`/api/users/:id`, (req, res) => {
