@@ -1,9 +1,9 @@
 const express = require("express");
 const shortid = require("shortid");
-const server = express();
+const app = express();
 const port = 5000;
 
-server.use(express.json());
+app.use(express.json());
 
 let users = [
   {
@@ -13,11 +13,11 @@ let users = [
   },
 ];
 
-server.get(`/api/users`, (req, res) => {
+app.get(`/api/users`, (req, res) => {
   res.status(200).json(users);
 });
 
-server.delete(`/api/users/:id`, (req, res) => {
+app.delete(`/api/users/:id`, (req, res) => {
   const { id } = req.params;
 
   const userDeleted = users.find((user) => user.id === id);
@@ -30,7 +30,7 @@ server.delete(`/api/users/:id`, (req, res) => {
   }
 });
 
-server.post("/api/users", (req, res) => {
+app.post("/api/users", (req, res) => {
   const newUser = req.body;
 
   newUser.id = shortid.generate();
@@ -39,7 +39,7 @@ server.post("/api/users", (req, res) => {
   res.status(201).json(newUser);
 });
 
-server.get(`/api/users/:id`, (req, res) => {
+app.get(`/api/users/:id`, (req, res) => {
   const { id } = req.params;
   const singleUser = req.body;
 
@@ -54,6 +54,20 @@ server.get(`/api/users/:id`, (req, res) => {
   res.status(201).json(res.params.id);
 });
 
-server.listen(port, () =>
+app.put("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  let userIndex = users.findIndex((user) => user.id === id);
+
+  if (userIndex !== 1) {
+    users[userIndex] = changes;
+    res.status(200).json(users[userIndex]);
+  } else {
+    res.status(404).json({ message: "could not find the user!" });
+  }
+});
+
+app.listen(port, () =>
   console.log(`Listening server on port ${port}, happy coding!`)
 );
