@@ -3,7 +3,7 @@ const shortid = require("shortid");
 const app = express();
 const port = 5000;
 
-app.use(express.json());
+app.use(express.json()); //doing the parse from object to json.
 
 let users = [
   {
