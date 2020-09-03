@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+.new-user-form {
+  background: #eee;
+  padding: 40px;
+}
+
+.user-card {
+  border: 1px solid #eee;
+  width: 32vw;
+  margin: 30px;
+}
+
+.user-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}

@@ -10,9 +10,14 @@ app.use(cors());
 
 let users = [
   {
-    id: "lkjasdf84",
     name: "Jane Doe",
     bio: "Not Tarzan's Wife, another Jane",
+    id: shortid.generate(),
+  },
+  {
+    name: "John Doe",
+    bio: "Not Tarzan's Wife, another Jane",
+    id: shortid.generate(),
   },
 ];
 
@@ -38,8 +43,18 @@ app.post("/api/users", (req, res) => {
 
   newUser.id = shortid.generate();
 
-  users.push(newUser);
-  res.status(201).json(newUser);
+  if (
+    (newUser.id == null || newUser.id == "",
+    newUser.name == null || newUser.name == "",
+    newUser.bio == null || newUser.bio == "")
+  ) {
+    alert("Please Fill All Required Field");
+    res.status(404).json({ message: "user not added!" });
+    return false;
+  } else {
+    users.push(newUser);
+    res.status(201).json(newUser);
+  }
 });
 
 app.get(`/api/users/:id`, (req, res) => {
