@@ -8,18 +8,7 @@ app.use(express.json()); //doing the parse from object to json.
 
 app.use(cors());
 
-let users = [
-  {
-    name: "Jane Doe",
-    bio: "Not Tarzan's Wife, another Jane",
-    id: shortid.generate(),
-  },
-  {
-    name: "John Doe",
-    bio: "Not Tarzan's Wife, another Jane",
-    id: shortid.generate(),
-  },
-];
+let users = [];
 
 app.get(`/api/users`, (req, res) => {
   res.status(200).json(users);
@@ -78,7 +67,7 @@ app.put("/api/users/:id", (req, res) => {
 
   let userIndex = users.findIndex((user) => user.id === id);
 
-  if (userIndex !== 1) {
+  if (userIndex !== -1) {
     users[userIndex] = changes;
     res.status(200).json(users[userIndex]);
   } else {
